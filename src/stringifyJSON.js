@@ -5,21 +5,16 @@
 var stringifyJSON = function (obj) {
   if (obj == null)
     return 'null';
-  if (Object.prototype.toString.call( obj ) === '[object Array]'){
+  if (obj instanceof Array){
     if (obj[0] == undefined)
       obj[0]=null;
+    var arrRes = '[';
     for (var i=0 ; i < obj.length ; i++){
-      if (typeof(arrRes) != 'string')
-        var arrRes = '';
-      if (i == 0)
-        arrRes = arrRes + '[';
-      if (i == obj.length-1)
-        closeVal=']';
-      else
-        closeVal=',';
-      arrRes = arrRes + stringifyJSON(obj[i]) + closeVal;
+      arrRes += stringifyJSON(obj[i]);
+      if (i != obj.length -1)
+        arrRes += ',';
     }
-    return arrRes;
+    return arrRes + ']';
   }
   switch (typeof(obj)){
     case 'object':
